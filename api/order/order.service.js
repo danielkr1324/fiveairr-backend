@@ -50,7 +50,8 @@ async function add(order) {
   try {
     let collection = await dbService.getCollection('order')
     let addedOrder = await collection.insertOne(order)
-    addedOrder = addedOrder.ops[0]
+    addedOrder = await collection.findOne({ _id: addedOrder.insertedId })
+
     addedOrder.createdAt = new ObjectId(addedOrder._id).getTimestamp()
 
     socketService.emitToUser({

@@ -33,7 +33,10 @@ async function getOrderById(req, res) {
 async function addOrder(req, res) {
   try {
     const order = req.body
+
     const addedOrder = await orderService.add(order)
+    console.log(addedOrder)
+
     res.json(addedOrder)
   } catch (err) {
     logger.error('Failed to add order', err)
